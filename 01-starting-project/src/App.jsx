@@ -1,8 +1,14 @@
 import { CORE_CONCEPTS } from './data'
-import Header from './components/Header'
+import Header from './components/Header/Header'
 import CoreConcept from './components/CoreConcept';
-
+import TabButton from './components/TabButton';
+import { useState } from 'react';
 function App() {
+  const [selectedTopic, setSelectedTopic] = useState("Please click a button")
+
+  const handleSelect = (selectButton) => {
+    setSelectedTopic(selectButton)
+  }
   return (
     <div>
       <Header />
@@ -21,7 +27,16 @@ function App() {
 
           </ul>
         </section>
-        <h2>Time to get started!</h2>
+        <section id='examples'>
+          <h2>Example</h2>
+          <menu>
+            <TabButton onSelect={() => handleSelect("component")}>Component</TabButton>
+            <TabButton onSelect={() => handleSelect("jsx")}>JSX</TabButton>
+            <TabButton onSelect={() => handleSelect("pros")}>Pros</TabButton>
+            <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
+          </menu>
+        </section>
+        {selectedTopic}
       </main>
     </div>
   );
