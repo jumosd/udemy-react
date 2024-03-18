@@ -11,10 +11,10 @@ const Examples = () => {
         <>
             <Section title={Examples} id='examples'>
                 <menu>
-                    <TabButton isSelected={selectedTopic === 'components'} onSelect={() => handleSelect("components")}>Component</TabButton>
-                    <TabButton isSelected={selectedTopic === 'jsx'} onSelect={() => handleSelect("jsx")}>JSX</TabButton>
-                    <TabButton isSelected={selectedTopic === 'props'} onSelect={() => handleSelect("props")}>Pros</TabButton>
-                    <TabButton isSelected={selectedTopic === 'state'} onSelect={() => handleSelect("state")}>State</TabButton>
+                    <TabButton isSelected={selectedTopic === 'components'} onClick={() => handleSelect("components")}>Component</TabButton>
+                    <TabButton isSelected={selectedTopic === 'jsx'} onClick={() => handleSelect("jsx")}>JSX</TabButton>
+                    <TabButton isSelected={selectedTopic === 'props'} onClick={() => handleSelect("props")}>Pros</TabButton>
+                    <TabButton isSelected={selectedTopic === 'state'} onClick={() => handleSelect("state")}>State</TabButton>
                 </menu>
             </Section>
             {!selectedTopic && <p>please select a topic</p>}
