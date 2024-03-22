@@ -24,13 +24,15 @@ const Examples = () => {
     return (
         <>
             <Section title={Examples} id='examples'>
-                <Tabs button={
-                    <>
-                        <TabButton isSelected={selectedTopic === 'components'} onClick={() => handleSelect("components")}>Component</TabButton>
-                        <TabButton isSelected={selectedTopic === 'jsx'} onClick={() => handleSelect("jsx")}>JSX</TabButton>
-                        <TabButton isSelected={selectedTopic === 'props'} onClick={() => handleSelect("props")}>Pros</TabButton>
-                        <TabButton isSelected={selectedTopic === 'state'} onClick={() => handleSelect("state")}>State</TabButton>
-                    </>}>
+                <Tabs
+                    buttonContainer="menu"
+                    button={
+                        <>
+                            <TabButton isSelected={selectedTopic === 'components'} onClick={() => handleSelect("components")}>Component</TabButton>
+                            <TabButton isSelected={selectedTopic === 'jsx'} onClick={() => handleSelect("jsx")}>JSX</TabButton>
+                            <TabButton isSelected={selectedTopic === 'props'} onClick={() => handleSelect("props")}>Pros</TabButton>
+                            <TabButton isSelected={selectedTopic === 'state'} onClick={() => handleSelect("state")}>State</TabButton>
+                        </>}>
                     {tabContent}
                 </Tabs>
 
