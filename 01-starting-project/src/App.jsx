@@ -1,5 +1,6 @@
 
-import Header from './components/Header/Header'
+
+import Header from '../../01-starting-project 2/src/components/Header';
 import CoreConcepts from './components/CoreConcepts/CoreConcepts';
 import Examples from './components/Examples/Examples';
 function App() {
@@ -7,7 +8,7 @@ function App() {
 
   return (
     <div>
-      <Header />
+      <Header></Header>
       <main>
         <CoreConcepts />
         <Examples />
