@@ -1,33 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import ResultModal from './ResultModal';
+
 
 const TimerChallenge = ({ title, targetTime }) => {
+    const timer = useRef()
     const [timerStarted, setTimerStarted] = useState(false)
     const [timerExpired, setTimerExpired] = useState(false)
 
     const handleStart = () => {
-        setTimerStarted(true)
-        setTimeout(() => {
+        timer.current = setTimeout(() => {
             setTimerExpired(true)
         }, targetTime * 1000)
+        setTimerStarted(true)
     }
+    const handleStop = () => {
+        clearTimeout(timer.current)
+    }
+
     return (
-        <section className='challenge'>
-            <h2>{title}</h2>
-            {timerExpired && <p>실패 했어요!</p>}
-            <p className='challengs-time'>
-                {targetTime}초
-            </p>
-            <p>
-                <button onClick={handleStart}>
-                    {timerStarted ? '멈춤' : '시작'}
-                </button>
-            </p>
+        <>
+            {timerExpired && <ResultModal result='졌음' targetTime={targetTime} />}
 
-            <p className={timerStarted ? 'active' : undefined}>
-                {timerStarted ? "타이머를시작합니다." : "타이머가중단되었습니다."}
-            </p>
+            <section className='challenge'>
+                <h2>{title}</h2>
+                <p className='challengs-time'>
+                    {targetTime}초
+                </p>
+                <p>
+                    <button onClick={timerStarted ? handleStop : handleStart}>
+                        {timerStarted ? '멈춤' : '시작'}
+                    </button>
+                </p>
 
-        </section>
+                <p className={timerStarted ? 'active' : undefined}>
+                    {timerStarted ? "타이머를시작합니다." : "타이머가중단되었습니다."}
+                </p>
+
+            </section>
+        </>
     );
 };
 
