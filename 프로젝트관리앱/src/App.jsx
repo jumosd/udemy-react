@@ -35,12 +35,19 @@ function App() {
       }
     })
   }
-
+  const CancelAddProjectHandler = () => {
+    setProjectsState(prevState => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined
+      }
+    });
+  }
   console.log(projectsState)
 
   let content;
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject onAdd={addProjectHandler} />
+    content = <NewProject onAdd={addProjectHandler} onCancel={CancelAddProjectHandler} />
   } else if (projectsState.selectedProjectId === undefined) {
     content = <NoselectedProject onStartAddProject={handleStartAddProject} />
   }

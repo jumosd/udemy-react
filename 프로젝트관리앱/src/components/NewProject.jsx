@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import Input from './Input';
 import Modal from './Modal';
-const NewProject = ({ onAdd }) => {
+const NewProject = ({ onAdd, onCancel }) => {
     const modal = useRef();
 
     const title = useRef();
@@ -36,7 +36,7 @@ const NewProject = ({ onAdd }) => {
                 <p className='text-stone-600 mb-4'>빈칸을 입력하면안됩니다 :D</p>
             </Modal>
             <menu className='flex items-center justify-end gap-4 my-4'>
-                <li><button className='text-stone-800 hover:text-stone-950'>취소</button></li>
+                <li><button className='text-stone-800 hover:text-stone-950' onClick={onCancel}>취소</button></li>
                 <li><button className='px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:text-tone-950'
                     onClick={saveHandler}
                 >저장</button></li>
