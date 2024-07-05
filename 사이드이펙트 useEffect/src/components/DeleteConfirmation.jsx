@@ -1,12 +1,17 @@
 import { useEffect } from "react";
 
-export default function DeleteConfirmation({ setModalIsOpen, onConfirm, onCancel }) {
+export default function DeleteConfirmation({ onConfirm, onCancel }) {
   useEffect(() => {
     console.log("타이머시작")
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       onConfirm()
     }, 3000)
-  })
+
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [])
   return (
     <div id="delete-confirmation">
       <h2>Are you sure?</h2>
