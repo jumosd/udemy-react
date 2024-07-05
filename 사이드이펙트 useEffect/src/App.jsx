@@ -82,21 +82,20 @@ function App() {
 
       <header>
         <img src={logoImg} alt="Stylized globe" />
-        <h1>PlacePicker</h1>
+        <h1>좋아하는 장소선택</h1>
         <p>
-          Create your personal collection of places you would like to visit or
-          you have visited.
+          방문하고 싶은 곳이나 방문한 곳의 리스트를 만들어 보세요.
         </p>
       </header>
       <main>
         <Places
-          title="I'd like to visit ..."
-          fallbackText={'Select the places you would like to visit below.'}
+          title="방문하고 싶은곳"
+          fallbackText={'방문하고 싶은 곳을 아래에서 선택하세요.'}
           places={pickedPlaces}
           onSelectPlace={handleStartRemovePlace}
         />
         <Places
-          title="Available Places"
+          title="가능한 장소들"
           places={availablePlaces}
           onSelectPlace={handleSelectPlace}
         />

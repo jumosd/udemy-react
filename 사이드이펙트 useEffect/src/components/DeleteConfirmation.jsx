@@ -20,16 +20,17 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
   }, [onConfirm])
   return (
     <div id="delete-confirmation">
-      <h2>Are you sure?</h2>
-      <p>Do you really want to remove this place?</p>
+      <h2>해당 장소를 없앨까요?</h2>
+      <p>정말 이 장소를 삭제하시겠습니까??</p>
       <div id="confirmation-actions">
         <button onClick={onCancel} className="button-text">
-          No
+          아니오
         </button>
         <button onClick={onConfirm} className="button">
-          Yes
+          네
         </button>
       </div>
+
       <Progressbar Timer={TIMER} />
     </div>
   );
