@@ -2,21 +2,29 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-const QuestionTimer = ({ timeout, onTimeout }) => {
-    const [remainingTime, setRemainingTime] = useState(timeout)
+const QuestionTimer = ({ timeout, onTimeout, mode }) => {
+    const [remainingTime, setRemainingTime] = useState(0)
 
     useEffect(() => {
-
-        setTimeout(onTimeout, timeout)
+        const timer = setTimeout(onTimeout, timeout)
+        return () => clearTimeout(timer)
     }, [onTimeout, timeout])
 
     useEffect(() => {
-        setInterval(() => {
-            setRemainingTime(prevTime => prevTime - 100)
-        }, 100)
+        const interval = setInterval(() => {
+            setRemainingTime(prevTime => {
+
+                if (prevTime > timeout) {
+                    return
+                } else {
+                    return prevTime + 10
+                }
+            })
+        }, 10)
+        return () => clearInterval(interval)
     }, [])
     return (
-        <progress id="question-time" value={remainingTime} max={timeout} />
+        <progress id="question-time" value={remainingTime} max={timeout} className={mode} />
     );
 };
 

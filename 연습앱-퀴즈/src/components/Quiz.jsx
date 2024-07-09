@@ -1,21 +1,25 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+
 import QUESTIONS from '../questions'
 import quizCompleteImg from '../assets/quiz-complete.png'
-import QuestionTimer from './QuestionTimer';
 import { useCallback } from 'react';
+import { css } from 'styled-components';
+import Question from './Question';
 
 const Quiz = () => {
+    const [answerState, setAnswerState] = useState('')
     const [userAnswers, setUserAnswers] = useState([])
-
-    const activeQuestionIndex = userAnswers.length
+    console.log(userAnswers)
+    // handleSeclectAnswer() 함수가 작동하게되면 1초후에 정답과 오답으로 나뉘어지게 되어있는데 userAnswers 상태는 handleSeclectAnswer()함수를 실행시키자마자 바로 상태값이 변화됨.그래서 숫자를 맞추기위해 -1한값이 있어야함
+    const activeQuestionIndex = answerState === '' ? userAnswers.length : userAnswers.length - 1
     const quizIsComplete = activeQuestionIndex === QUESTIONS.length
 
-    const handleSeclectAnswer = useCallback((selectedAnswer) => {
+    const handleSelectAnswer = useCallback((selectedAnswer) => {
         setUserAnswers(prevSelectedAnswer => [...prevSelectedAnswer, selectedAnswer])
-    })
 
-    const handleSkipAnswer = useCallback(() => handleSeclectAnswer(null), [handleSeclectAnswer])
+    }, [])
+
+    const handleSkipAnswer = useCallback(() => handleSelectAnswer(null), [handleSelectAnswer])
 
 
     if (quizIsComplete) {
@@ -26,22 +30,16 @@ const Quiz = () => {
             </div>
         )
     }
-    const shuffledAnswers = [...QUESTIONS[activeQuestionIndex].answers];
-    shuffledAnswers.sort(() => Math.random() - 0.5)
+
     return (
         <div id='quiz'>
-            <div id='question'>
-                <QuestionTimer timeout={10000} onTimeout={handleSkipAnswer}></QuestionTimer>
-                <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
-                <ul id='answers'>
-                    {shuffledAnswers.map((answer) => (
-                        <li key={answer} className='answer'>
-                            <button onClick={() => handleSeclectAnswer(answer)}>{answer}</button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
+            <Question
+                key={activeQuestionIndex}
+                index={activeQuestionIndex}
+                onSelectAnswer={handleSelectAnswer}
+                onSkipAnswer={handleSkipAnswer}
+            />
+        </div >
     );
 };
 
