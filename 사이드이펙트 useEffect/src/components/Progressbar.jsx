@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const Progressbar = ({ Timer, }) => {
-    const [remainingTime, setRemainingTime] = useState(Timer)
+const Progressbar = ({ timer, }) => {
+    const [remainingTime, setRemainingTime] = useState(timer)
     useEffect(() => {
 
         const interval = setInterval(() => {
@@ -14,7 +14,7 @@ const Progressbar = ({ Timer, }) => {
 
     return (
         <div>
-            <progress value={remainingTime} max={Timer} />
+            <progress value={remainingTime} max={timer} />
         </div>
     );
 };
