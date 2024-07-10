@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
 import QUESTIONS from '../questions'
-import quizCompleteImg from '../assets/quiz-complete.png'
+
 import { useCallback } from 'react';
 import { css } from 'styled-components';
 import Question from './Question';
+import Summary from './Summary';
 
 const Quiz = () => {
     const [answerState, setAnswerState] = useState('')
@@ -14,7 +15,9 @@ const Quiz = () => {
     const activeQuestionIndex = answerState === '' ? userAnswers.length : userAnswers.length - 1
     const quizIsComplete = activeQuestionIndex === QUESTIONS.length
 
+    //답변선택시 답변
     const handleSelectAnswer = useCallback((selectedAnswer) => {
+        // @ts-ignore
         setUserAnswers(prevSelectedAnswer => [...prevSelectedAnswer, selectedAnswer])
 
     }, [])
@@ -24,10 +27,7 @@ const Quiz = () => {
 
     if (quizIsComplete) {
         return (
-            <div id='summary'>
-                <img src={quizCompleteImg} alt="" />
-                <h2>Quiz Completed</h2>
-            </div>
+            <Summary userAnswers={userAnswers} />
         )
     }
 

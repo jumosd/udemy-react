@@ -32,6 +32,7 @@ const Question = ({
         setTimeout(() => {
             setAnswer({
                 selectedAnswer: answer,
+                // @ts-ignore
                 isCorrect: QUESTIONS[index].answers[0] === answer
             })
 

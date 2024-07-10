@@ -12,6 +12,7 @@ const QuestionTimer = ({ timeout, onTimeout, mode }) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
+            // @ts-ignore
             setRemainingTime(prevTime => {
 
                 if (prevTime > timeout) {
