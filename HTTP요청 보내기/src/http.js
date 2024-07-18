@@ -1,5 +1,3 @@
-import { sortPlacesByDistance } from "./loc"
-
 export const fetchingAvailablePlaces = async () => {
     // url에 get요청으로 장소를 가져 옵니다
     const response = await fetch("http://localhost:3000/places")
@@ -9,5 +7,5 @@ export const fetchingAvailablePlaces = async () => {
     if (!response.ok) {
         throw new Error("사진을 가져오지못했어요")
     }
-    return resData
+    return resData.places
 }
