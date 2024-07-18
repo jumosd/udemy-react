@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Error from './Error.jsx';
 
 import { sortPlacesByDistance } from '../loc.js'
+import { fetchingAvailablePlaces } from '../http.js';
 
 export default function AvailablePlaces({ onSelectPlace }) {
   const [isFetchingData, setIsFetchingData] = useState(false)
@@ -20,21 +21,13 @@ export default function AvailablePlaces({ onSelectPlace }) {
       try {
         // 데이터가져오기 상태를 1로 바꿉니다
         setIsFetchingData(true)
-        // url에 get요청으로 장소를 가져 옵니다
-        const response = await fetch("http://localhost:3000/places")
-        // 불러온데이터를 json 형식으로 변환합니다
-        const resData = await response.json()
-        // 응답이 ok가아니면 에러를 만듭니다
-        if (!response.ok) {
-          throw new Error("사진을 가져오지못했어요")
-        }
-
+        const places = await fetchingAvailablePlaces()
         navigator.geolocation.getCurrentPosition((position) => {
-          const sortedPlaces = sortPlacesByDistance(resData.places,
+          const sortedPlaces = sortPlacesByDistance(
+            places,
             position.coords.latitude,
             position.coords.longitude
           )
-
           //json형식으로 만든데이터에 places(장소) 부분을 선택가능한장소로 변환해줍니다.
           setAvailablePlaces(sortedPlaces)
           setIsFetchingData(false)
