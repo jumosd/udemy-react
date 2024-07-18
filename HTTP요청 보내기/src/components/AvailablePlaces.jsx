@@ -37,15 +37,16 @@ export default function AvailablePlaces({ onSelectPlace }) {
 
           //json형식으로 만든데이터에 places(장소) 부분을 선택가능한장소로 변환해줍니다.
           setAvailablePlaces(sortedPlaces)
+          setIsFetchingData(false)
         })
         //요청자체가 실패하는경우 (네트워크오류, url오류, 등등) 해당 에러를 error상태에 저장합니다.
       } catch (error) {
         setError({
           'message': error.message || "장소를 찾지 못하고있어요"
         })
+        setIsFetchingData(false)
       }
       // 데이터가져오기상태를 0으로 바꿉니다.
-      setIsFetchingData(false)
     }
     fetchPlace()
   }, [])
