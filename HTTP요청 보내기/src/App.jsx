@@ -5,12 +5,15 @@ import Modal from './components/Modal.jsx';
 import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import AvailablePlaces from './components/AvailablePlaces.jsx';
+import { updateUserPlaces } from './http.js';
+import Error from './components/Error.jsx';
+
 
 function App() {
   const selectedPlace = useRef();
 
   const [userPlaces, setUserPlaces] = useState([]);
-
+  const [errorUpdatingPlaces, setErrorUpdatingPlaces] = useState()
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function handleStartRemovePlace(place) {
@@ -22,7 +25,7 @@ function App() {
     setModalIsOpen(false);
   }
 
-  function handleSelectPlace(selectedPlace) {
+  async function handleSelectPlace(selectedPlace) {
     setUserPlaces((prevPickedPlaces) => {
       if (!prevPickedPlaces) {
         prevPickedPlaces = [];
@@ -31,19 +34,53 @@ function App() {
         return prevPickedPlaces;
       }
       return [selectedPlace, ...prevPickedPlaces];
-    });
+    })
+    try {
+      await updateUserPlaces([selectedPlace, ...userPlaces])
+    }
+    catch (error) {
+      setUserPlaces(userPlaces)
+      setErrorUpdatingPlaces({
+        message: error.message ||
+          '장소 수정에 실패했습니다'
+      })
+    }
   }
 
   const handleRemovePlace = useCallback(async function handleRemovePlace() {
     setUserPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current.id)
     );
+    try {
+      await updateUserPlaces(
+        userPlaces.filter(place => place.id !== selectedPlace.current.id)
+      )
+    } catch (error) {
+      setUserPlaces(userPlaces)
+      setErrorUpdatingPlaces({
+        message: error.message || '장소 삭제가 안됬어요'
+      })
+    }
 
     setModalIsOpen(false);
   }, []);
 
+  function errorHandler() {
+    setErrorUpdatingPlaces(null)
+  }
+
   return (
     <>
+
+      <Modal open={errorUpdatingPlaces} onClose={errorHandler}>
+        {errorUpdatingPlaces &&
+          <Error
+            title="에러가 발생했어요"
+            message={errorUpdatingPlaces.message}
+            onConfirm={errorHandler}
+          />
+        }
+      </Modal>
       <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
