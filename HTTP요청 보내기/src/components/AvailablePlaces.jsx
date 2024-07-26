@@ -44,7 +44,6 @@ export default function AvailablePlaces({ onSelectPlace }) {
     fetchPlace()
   }, [])
 
-  console.log(error)
   if (error) {
     return <Error title="에러가 발생했어요" message={error.message} />
   }

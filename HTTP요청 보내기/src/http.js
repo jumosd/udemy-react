@@ -21,3 +21,19 @@ export const fetchingUserPlaces = async () => {
     }
     return resData.places
 }
+
+export const updateUserPlaces = async (places) => {
+    const response = await fetch('http://localhost:3000/user-places', {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({ places })
+    })
+    const resData = await response.json()
+    if (!response.ok) {
+        throw new Error("사용자 데이터 업데이트에 실패했어요")
+    }
+    return resData.message
+
+}
